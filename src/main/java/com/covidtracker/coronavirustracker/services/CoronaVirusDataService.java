@@ -21,6 +21,11 @@ public class CoronaVirusDataService {
     private static String VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
     private List<LocationStats> allStats = new ArrayList<>();
+
+    public List<LocationStats> getAllStats() {
+        return allStats;
+    }
+
     @PostConstruct
     @Scheduled(cron = "* * 1 * * *")
     public void fetchVirusData() throws java.io.IOException, InterruptedException{
@@ -41,7 +46,7 @@ public class CoronaVirusDataService {
             locationStats.setCountry(record.get("Country/Region"));
 
             locationStats.setLatestTotalCases(Integer.parseInt(record.get(record.size()-1)));
-            System.out.println(locationStats);
+//            System.out.println(locationStats);
             newStats.add(locationStats);
         }
         this.allStats= newStats;
